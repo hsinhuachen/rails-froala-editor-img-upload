@@ -1,0 +1,76 @@
+<%= simple_form_for(@post) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.text_area :content, id: "wysiwyg" %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
+<script>
+  $(function(){
+    $('#wysiwyg').froalaEditor({
+      inlineMode: false,
+      heightMin: '200px',
+      imageUploadParam: 'image',
+      imageUploadURL: '/upload_image',
+      imageUploadMethod: 'POST',
+      imageMaxSize: 2 * 1024 * 1024,
+      imageInsertButtons: ['imageBack', '|', 'imageUpload', 'imageByURL'],
+      imageDefaultAlign: null,
+      imageDefaultDisplay: null,
+      imageDefaultWidth: null
+      // toolbarButtons: ['bold', 'italic', 'underline'],
+    })
+    .on('froalaEditor.image.beforeUpload', function (e, editor, images) {
+    })
+    .on('froalaEditor.image.uploaded', function (e, editor, response) {
+      
+    })
+    .on('froalaEditor.image.inserted', function (e, editor, $img, response) {
+    })
+    .on('froalaEditor.image.replaced', function (e, editor, $img, response) {
+      
+    })
+    .on('froalaEditor.image.error', function (e, editor, error, response) {
+      if (error.code == 1) {  }
+
+      // No link in upload response.
+      else if (error.code == 2) {  }
+
+      // Error during image upload.
+      else if (error.code == 3) {  }
+
+      // Parsing response failed.
+      else if (error.code == 4) { }
+
+      // Image too text-large.
+      else if (error.code == 5) { }
+
+      // Invalid image type.
+      else if (error.code == 6) { }
+
+      // Image can be uploaded only to same domain in IE 8 and IE 9.
+      else if (error.code == 7) { }
+
+    });
+  })
+</script>
